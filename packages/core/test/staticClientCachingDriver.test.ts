@@ -15,7 +15,6 @@ import multipleHeadersTests from "./cache/multipleHeaders.tests";
 import noCacheHeaderTests from "./cache/noCacheHeader.tests";
 
 import { BaseClient } from "../src/base/client";
-import { CacheManagerKeyv } from "../src/base/cacheManagerKeyv";
 
 describe("Default cache tests", function() {
   before(function() {
@@ -24,28 +23,6 @@ describe("Default cache tests", function() {
     this.client = new BaseClient({
       baseUri: "https://somewhere"
     });
-  });
-  cacheTests();
-  etagTests();
-  evictionTests();
-  multipleHeadersTests();
-  noCacheHeaderTests();
-});
-
-describe("Redis cache tests", function() {
-  before(function() {
-    chai.should();
-    chai.use(chaiAsPromised);
-    this.client = new BaseClient({
-      baseUri: "https://somewhere",
-      cacheManager: new CacheManagerKeyv("redis://localhost")
-    });
-  });
-  after(function() {
-    this.client.clientConfig.cacheManager.quit();
-  });
-  beforeEach(function() {
-    this.client.clientConfig.cacheManager?.keyv?.clear();
   });
   cacheTests();
   etagTests();
